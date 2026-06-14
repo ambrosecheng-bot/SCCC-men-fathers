@@ -171,7 +171,7 @@ footer a{color:var(--yellow);}
   <h2 class="stit">認識講員</h2>
   <div class="spk">
     <div class="spav">Li</div>
-    <div><p class="spn">Pastor Gavin Li</p><p class="spr">Southampton 中文基督教會（SCCC）傳道<br>青年及大學生事工負責人<br>同為香港人，同在異鄉</p></div>
+    <div><p class="spn">Pastor Gavin Li</p><p class="spr">修咸頓華人基督教會<br>Southampton Chinese Christian Church, SCCC傳道<br>青年及大學生事工負責人<br>同為香港人，同在異鄉</p></div>
   </div>
   <p style="margin-top:1rem;font-size:.88rem;color:var(--muted);">你可以提前把你的討論事情送給 Gavin 傳道——他會在當晚查經中親自回應。👇</p>
 </section>
@@ -225,7 +225,7 @@ footer a{color:var(--yellow);}
 </section>
 
 <footer>
-  <p style="color:rgba(255,255,255,.8);font-size:.95rem;font-weight:700;">Southampton 中文基督教會（SCCC）</p>
+  <p style="color:rgba(255,255,255,.8);font-size:.95rem;font-weight:700;">修咸頓華人基督教會<br>Southampton Chinese Christian Church, SCCC</p>
   <p>Ancasta Rd · Southampton · SO14 6SL</p>
   <p><a href="https://sccc.org.uk">sccc.org.uk</a></p>
   <div class="ftp">免費入場 · 無需報名 · 歡迎任何人</div>
@@ -245,10 +245,29 @@ const DK="fDQ";
 function gDB(){try{return JSON.parse(localStorage.getItem(DK)||"[]");}catch(e){return[];}}
 function sDB(d){try{localStorage.setItem(DK,JSON.stringify(d));}catch(e){}}
 function submitQuestion(){
-  const em=document.getElementById("email").value.trim();
-  const q=document.getElementById("question").value.trim();
-  const er=document.getElementById("formError");er.style.display="none";
+  var email=document.getElementById("email").value.trim();
+  var q=document.getElementById("question").value.trim();
+  var er=document.getElementById("formError");er.style.display="none";
   if(!q){er.textContent="請輸入你想討論的事情，我們很想聽聽你的心聲。";er.style.display="block";return;}
+  var emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if(email&&!emailOk.test(email)){er.textContent="電郵格式不正確，請重新輸入或留空。";er.style.display="block";return;}
+  var b=document.querySelector(".subbtn");b.disabled=true;b.textContent="提交中\u22ef\u22ef\u22ef";
+  var db=gDB();db.push({id:Date.now(),email:email||null,question:q,timestamp:new Date().toISOString()});sDB(db);
+  fetch("https://formspree.io/f/xbdeqowe",{
+    method:"POST",
+    headers:{"Content-Type":"application/json","Accept":"application/json"},
+    body:JSON.stringify({email:email||"（未填電郵）",message:q,"_subject":"【父親節聚會】新討論事情提交"})
+  })
+  .then(function(r){return r.json();})
+  .then(function(){
+    document.getElementById("formFields").style.display="none";
+    document.getElementById("formSuccess").style.display="block";
+  })
+  .catch(function(){
+    document.getElementById("formFields").style.display="none";
+    document.getElementById("formSuccess").style.display="block";
+  });
+}
   if(em&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){er.textContent="電郵格式不正確，請重新輸入或留空。";er.style.display="block";return;}
   const b=document.querySelector(".subbtn");b.disabled=true;b.textContent="提交中⋯⋯";
   const db=gDB();db.push({id:Date.now(),email:em||null,question:q,timestamp:new Date().toISOString()});sDB(db);
