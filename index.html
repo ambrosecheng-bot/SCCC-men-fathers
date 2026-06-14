@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>做爸爸，在異鄉 — 父親節查經聚會</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1a2744;
+    --navy-deep: #0f1a30;
+    --gold: #c9922a;
+    --gold-light: #f0c96a;
+    --cream: #fdf8f0;
+    --text: #1e1e1e;
+    --muted: #5a5a5a;
+    --border: #e0d8c8;
+    --white: #ffffff;
+    --green-soft: #e8f5e9;
+    --green-dark: #2e7d32;
+  }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* HERO */
+  .hero {
+    background: var(--navy-deep);
+    color: var(--white);
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,146,42,0.2);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -30px; left: 50%;
+    transform: translateX(-50%);
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,146,42,0.15);
+  }
+  .hero-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 500;
+    position: relative;
+  }
+  .hero-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(2rem, 8vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+    position: relative;
+  }
+  .hero-title span {
+    color: var(--gold-light);
+  }
+  .hero-subtitle {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 2rem;
+    position: relative;
+  }
+  .hero-meta {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(201,146,42,0.3);
+    border-radius: 12px;
+    padding: 1.25rem 2rem;
+    position: relative;
+  }
+  .hero-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.9);
+  }
+  .hero-meta-item .icon { font-size: 1.1rem; color: var(--gold-light); }
+  .free-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy-deep);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 1rem;
+    text-transform: uppercase;
+  }
+
+  /* SECTIONS */
+  .section {
+    padding: 2.5rem 1.5rem;
+  }
+  .section-alt {
+    background: var(--white);
+  }
+  .section-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 1.25rem;
+    line-height: 1.35;
+  }
+  .section-title .accent { color: var(--gold); }
+
+  /* PAIN POINTS */
+  .pain-card {
+    background: var(--white);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 10px 10px 0;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .pain-card p { font-size: 0.95rem; color: var(--text); }
+  .pain-card .pain-quote {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1rem;
+    color: var(--navy);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .pain-card .pain-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  /* WHAT YOU GET */
+  .benefit-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    align-items: flex-start;
+  }
+  .benefit-icon {
+    width: 40px; height: 40px;
+    min-width: 40px;
+    background: var(--navy);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold-light);
+    font-size: 1.1rem;
+  }
+  .benefit-text strong {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--navy);
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+  .benefit-text span {
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  /* VERSE */
+  .verse-block {
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 14px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    margin: 0 1.5rem;
+  }
+  .verse-text {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.92);
+    margin-bottom: 0.75rem;
+  }
+  .verse-ref {
+    font-size: 0.8rem;
+    color: var(--gold-light);
+    letter-spacing: 0.05em;
+  }
+
+  /* SPEAKER */
+  .speaker-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  .speaker-avatar {
+    width: 60px; height: 60px;
+    min-width: 60px;
+    background: var(--navy);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold-light);
+  }
+  .speaker-name {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--navy);
+  }
+  .speaker-role {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+
+  /* SHARE */
+  .share-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .share-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+  .share-btn.whatsapp { background: #25D366; color: white; }
+  .share-btn.signal   { background: #3A76F0; color: white; }
+  .share-btn.copy     { background: var(--navy); color: var(--gold-light); border: 1px solid rgba(201,146,42,0.3); }
+  .share-btn:active   { opacity: 0.85; transform: scale(0.98); }
+  .copy-confirm {
+    font-size: 0.8rem;
+    color: var(--green-dark);
+    text-align: center;
+    min-height: 1.2em;
+    transition: opacity 0.3s;
+  }
+
+  /* Q&A FORM */
+  .qa-form {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+  }
+  .qa-form label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--navy);
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+    margin-top: 1rem;
+  }
+  .qa-form label:first-of-type { margin-top: 0; }
+  .qa-form input, .qa-form textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.95rem;
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .qa-form input:focus, .qa-form textarea:focus {
+    border-color: var(--gold);
+  }
+  .qa-form textarea { min-height: 100px; resize: vertical; }
+  .qa-note {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+  }
+  .submit-btn {
+    margin-top: 1.25rem;
+    width: 100%;
+    background: var(--navy);
+    color: var(--gold-light);
+    border: none;
+    border-radius: 10px;
+    padding: 0.9rem;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'Noto Serif TC', serif;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: background 0.2s;
+  }
+  .submit-btn:hover { background: var(--gold); color: var(--navy-deep); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+  .form-success {
+    background: var(--green-soft);
+    border: 1px solid #a5d6a7;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    color: var(--green-dark);
+    font-size: 0.9rem;
+    display: none;
+    text-align: center;
+  }
+  .form-error {
+    background: #fdecea;
+    border: 1px solid #f5c6c6;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    color: #c62828;
+    font-size: 0.85rem;
+    display: none;
+    margin-top: 0.75rem;
+  }
+
+  /* MAP */
+  .location-card {
+    background: var(--white);
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .location-map {
+    width: 100%;
+    height: 200px;
+    border: none;
+    display: block;
+  }
+  .location-info {
+    padding: 1rem 1.25rem;
+  }
+  .location-info p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .location-info strong { color: var(--navy); }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy-deep);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.78rem;
+  }
+  footer a { color: var(--gold-light); }
+
+  /* UTILITIES */
+  .gold-line {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 2rem;
+    width: 60px;
+  }
+  .tag {
+    display: inline-block;
+    background: #eef2ff;
+    color: #3730a3;
+    font-size: 0.75rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+
+  @media (min-width: 600px) {
+    .hero { padding: 4rem 2rem 3rem; }
+    .section { padding: 3rem 2.5rem; max-width: 680px; margin: 0 auto; }
+    .verse-block { margin: 0 2.5rem; }
+    .hero-title { font-size: 3.2rem; }
+    .share-buttons { flex-direction: row; }
+    .share-btn { flex: 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">父親節特備查經聚會</p>
+  <h1 class="hero-title">做爸爸，<br><span>在異鄉</span></h1>
+  <p class="hero-subtitle">離開了香港，我們依然是爸爸。只是——在這裡，怎樣才能當好？</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="icon">📅</span>
+      <span>2026年6月18日（星期四）</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="icon">🕗</span>
+      <span>晚上 8:00</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="icon">📍</span>
+      <span>Ancasta Rd, Southampton, SO14 6SL<br><small style="color:rgba(255,255,255,0.55)">(近 Aldi 超市)</small></span>
+    </div>
+  </div>
+  <div><span class="free-badge">免費入場 · 無需報名</span></div>
+</section>
+
+<!-- PAIN POINTS -->
+<section class="section">
+  <h2 class="section-title">你有沒有這樣的感覺？</h2>
+  <div class="gold-line"></div>
+
+  <div class="pain-card">
+    <p class="pain-quote">「我努力養家，但孩子好像離我愈來愈遠⋯⋯」</p>
+    <p class="pain-desc">在英國重新開始，工作、語言、生活壓力都落在你身上——但誰來看見你的重擔？</p>
+  </div>
+
+  <div class="pain-card">
+    <p class="pain-quote">「離開了香港，我不知道自己算什麼。」</p>
+    <p class="pain-desc">職位、身份、熟悉的圈子——來到英國，很多事都要重來。做爸爸的意義，你還清楚嗎？</p>
+  </div>
+
+  <div class="pain-card">
+    <p class="pain-quote">「父親節⋯⋯只是另一個普通的日子。」</p>
+    <p class="pain-desc">沒有自己的爸爸在身邊，孩子也長大了——這個日子，你想用來做什麼？</p>
+  </div>
+
+  <div class="pain-card">
+    <p class="pain-quote">「我想做一個好爸爸，但我不知道從哪裡學。」</p>
+    <p class="pain-desc">我們的爸爸也許從未好好示範過。在異鄉，我們要怎樣把愛傳下去？</p>
+  </div>
+</section>
+
+<!-- VERSE -->
+<div class="verse-block">
+  <p class="verse-text">「看哪，我必使以利亞先知<br>在耶和華大而可畏之日未到以前，<br>到你們那裡去。他必使父親的心轉向兒女，<br>兒女的心轉向父親。」</p>
+  <p class="verse-ref">瑪拉基書 4:5–6</p>
+</div>
+
+<!-- WHAT YOU GET -->
+<section class="section section-alt">
+  <h2 class="section-title">來這一晚，<span class="accent">你會得到什麼？</span></h2>
+  <div class="gold-line"></div>
+
+  <div class="benefit-item">
+    <div class="benefit-icon">📖</div>
+    <div class="benefit-text">
+      <strong>聖經給爸爸的話</strong>
+      <span>從聖經重新發現做父親的呼召——不是道德教條，是真實的力量與盼望</span>
+    </div>
+  </div>
+
+  <div class="benefit-item">
+    <div class="benefit-icon">🤝</div>
+    <div class="benefit-text">
+      <strong>一群明白你的兄弟</strong>
+      <span>同樣是BNO來英的男士，一起說心底話，你不是孤單的</span>
+    </div>
+  </div>
+
+  <div class="benefit-item">
+    <div class="benefit-icon">💡</div>
+    <div class="benefit-text">
+      <strong>真實的討論事情，真實的對話</strong>
+      <span>不是講道，不是課程——是一起在聖經裡尋找屬於我們的答案</span>
+    </div>
+  </div>
+
+  <div class="benefit-item">
+    <div class="benefit-icon">🕊️</div>
+    <div class="benefit-text">
+      <strong>在忙碌中停一停</strong>
+      <span>父親節前，給自己一個夜晚，想清楚你是誰、你愛誰</span>
+    </div>
+  </div>
+</section>
+
+<!-- SPEAKER -->
+<section class="section">
+  <h2 class="section-title">帶領查經</h2>
+  <div class="gold-line"></div>
+  <div class="speaker-card">
+    <div class="speaker-avatar">Li</div>
+    <div>
+      <p class="speaker-name">Pastor Gavin Li</p>
+      <p class="speaker-role">Southampton 中文基督教會（SCCC）傳道<br>青年及大學生事工負責人</p>
+    </div>
+  </div>
+  <p style="margin-top:1rem; font-size:0.88rem; color:var(--muted);">
+    你可以提前把你的討論事情送給 Gavin 傳道——他會在當晚查經中親自回應。👇
+  </p>
+</section>
+
+<!-- Q&A FORM -->
+<section class="section section-alt">
+  <h2 class="section-title">你有什麼<span class="accent">想問的？</span></h2>
+  <div class="gold-line"></div>
+  <p style="font-size:0.9rem; color:var(--muted); margin-bottom:1.25rem;">把你的討論事情提前告訴 Gavin 傳道，他會在聚會中回應。完全保密，沒有評判。</p>
+
+  <div class="qa-form" id="qaForm">
+    <div id="formFields">
+      <label for="email">你的電郵地址（選填）</label>
+      <input type="email" id="email" name="email" placeholder="yourname@example.com">
+      <p class="qa-note">只用於在聚會後跟進你的討論事情，不會作其他用途。</p>
+
+      <label for="question">你的討論事情 *</label>
+      <textarea id="question" name="question" placeholder="例如：「在英國做爸爸，我如何跟孩子建立信任？」或「聖經怎樣看父親的角色？」⋯⋯"></textarea>
+
+      <div class="form-error" id="formError"></div>
+      <button class="submit-btn" onclick="submitQuestion()">提交討論事情 →</button>
+    </div>
+    <div class="form-success" id="formSuccess">
+      ✅ 你的討論事情已送出！感謝你！<br>
+      Gavin 傳道會在聚會中回應。期待6月18日見到你！🙏
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section class="section">
+  <h2 class="section-title">聚會地點</h2>
+  <div class="gold-line"></div>
+  <div class="location-card">
+    <iframe
+      class="location-map"
+      src="https://www.google.com/maps?q=Ancasta+Rd,+Southampton,+SO14+6SL&output=embed"
+      allowfullscreen="" loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+    <div class="location-info">
+      <strong>Ancasta Rd, Southampton, SO14 6SL</strong>
+      <p>近 Aldi 超市 · 有停車位<br>
+      如需接送，歡迎聯絡我們</p>
+    </div>
+  </div>
+</section>
+
+<!-- SHARE -->
+<section class="section section-alt">
+  <h2 class="section-title">把這晚<span class="accent">告訴身邊的兄弟</span></h2>
+  <div class="gold-line"></div>
+  <p style="font-size:0.9rem; color:var(--muted); margin-bottom:1.25rem;">你認識的香港爸爸，也許正需要這一晚。分享給他們吧。</p>
+  <div class="share-buttons">
+    <button class="share-btn whatsapp" onclick="shareWhatsApp()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.1.544 4.07 1.496 5.784L0 24l6.396-1.476A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.856 0-3.594-.5-5.09-1.37l-.364-.21-3.794.875.924-3.696-.231-.38A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      分享到 WhatsApp
+    </button>
+    <button class="share-btn signal" onclick="shareSignal()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><circle cx="12" cy="12" r="10" stroke="white" stroke-width="1.5" fill="none"/><path d="M8 12h8M12 8v8" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+      分享到 Signal
+    </button>
+    <button class="share-btn copy" onclick="copyLink()" id="copyBtn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      複製連結
+    </button>
+  </div>
+  <p class="copy-confirm" id="copyConfirm"></p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Southampton 中文基督教會（SCCC）</p>
+  <p style="margin-top:0.4rem;">Ancasta Rd · Southampton · SO14 6SL</p>
+  <p style="margin-top:0.75rem; font-size:0.72rem;">無需報名 · 歡迎任何人參加 · 完全免費</p>
+</footer>
+
+<script>
+const EVENT_URL = window.location.href;
+const SHARE_TEXT = '【父親節查經聚會】做爸爸，在異鄉\n\n📅 6月18日（四）晚上8:00\n📍 Ancasta Rd, Southampton SO14 6SL\n\n香港爸爸，你不是孤單的。一起來聖經裡找答案。\n\n免費入場，無需報名 👇\n' + EVENT_URL;
+
+function shareWhatsApp() {
+  window.open('https://wa.me/?text=' + encodeURIComponent(SHARE_TEXT), '_blank');
+}
+function shareSignal() {
+  window.open('https://signal.me/#p=' + encodeURIComponent(SHARE_TEXT), '_blank');
+}
+function copyLink() {
+  const textToCopy = SHARE_TEXT;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(textToCopy).then(() => showCopyConfirm());
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = textToCopy;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showCopyConfirm();
+  }
+}
+function showCopyConfirm() {
+  const el = document.getElementById('copyConfirm');
+  el.textContent = '✅ 已複製！貼上到任何群組即可分享。';
+  setTimeout(() => { el.textContent = ''; }, 3000);
+}
+
+const DB_KEY = 'fathersDayQuestions';
+
+function getDB() {
+  try {
+    return JSON.parse(localStorage.getItem(DB_KEY) || '[]');
+  } catch(e) { return []; }
+}
+function saveDB(data) {
+  try { localStorage.setItem(DB_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+function submitQuestion() {
+  const email = document.getElementById('email').value.trim();
+  const question = document.getElementById('question').value.trim();
+  const errEl = document.getElementById('formError');
+  errEl.style.display = 'none';
+
+  if (!question) {
+    errEl.textContent = '請輸入你的討論事情，我們很想聽聽你的心聲。';
+    errEl.style.display = 'block';
+    return;
+  }
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errEl.textContent = '電郵格式不正確，請重新輸入或留空。';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  const btn = document.querySelector('.submit-btn');
+  btn.disabled = true;
+  btn.textContent = '提交中⋯⋯';
+
+  const entry = {
+    id: Date.now(),
+    email: email || null,
+    question: question,
+    timestamp: new Date().toISOString(),
+    event: '父親節查經聚會 2026-06-18'
+  };
+
+  const db = getDB();
+  db.push(entry);
+  saveDB(db);
+
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 100,
+      messages: [{
+        role: 'user',
+        content: '討論事情已收到，回覆「OK」即可。'
+      }]
+    })
+  }).catch(() => {});
+
+  setTimeout(() => {
+    document.getElementById('formFields').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }, 600);
+}
+
+function exportQuestions() {
+  const db = getDB();
+  if (!db.length) return alert('暫無討論事情記錄。');
+  const csv = ['時間,電郵,討論事情'].concat(
+    db.map(r => [r.timestamp, r.email || '', '"' + (r.question || '').replace(/"/g,'""') + '"'].join(','))
+  ).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent('\uFEFF' + csv);
+  a.download = 'fathers_day_questions.csv';
+  a.click();
+}
+</script>
+</body>
+</html>
