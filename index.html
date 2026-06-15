@@ -188,7 +188,7 @@ footer a{color:var(--yellow);}
         <label for="qq">你想討論的事情 *</label>
         <textarea id="qq" placeholder="例如：「在英國做爸爸，我如何跟孩子建立信任？」⋯⋯"></textarea>
         <p id="qerr" style="color:#c0392b;font-size:.85rem;display:none;margin-top:.5rem;"></p>
-        <button class="subbtn" id="qbtn" type="button" onclick="sendQ()">提交我的討論事情 →</button>
+        <button class="subbtn" id="qbtn" type="button" onclick="(function(){var q=document.getElementById('qq').value.trim();var e=document.getElementById('qerr');e.style.display='none';if(!q){e.textContent='請先輸入你想討論的事情';e.style.display='block';return;}document.getElementById('ff').style.display='none';document.getElementById('fok').style.display='block';fetch('https://formspree.io/f/xbdeqowe',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({'_subject':'【SCCC父親節聚會】討論事情','電郵':document.getElementById('em').value||'未填','問題':q})}).catch(function(){});})()">提交我的討論事情 →</button>
       </div>
       <div id="fok" style="display:none;background:#E8F5EE;border:1.5px solid #52B788;border-radius:12px;padding:1.4rem;text-align:center;line-height:1.8;color:#2e7d4f;font-size:.95rem;">
         ✅ <strong>你的討論事情已收到！</strong><br>
