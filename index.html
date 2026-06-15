@@ -180,19 +180,23 @@ footer a{color:var(--yellow);}
   <div class="lbl ll">提前發問</div>
   <h2 class="stit">你心裡有什麼<br>想討論的事情？</h2>
   <p style="font-size:.9rem;color:var(--muted);margin-bottom:1.25rem;">把你想討論的事情告訴 Gavin 傳道，他會在聚會中回應。完全保密，沒有評判。</p>
-  <div class="qaw" id="qaForm">
-    <div id="formFields">
-      <label for="email">你的電郵地址（選填）</label>
-      <input type="email" id="email" placeholder="yourname@example.com">
-      <p class="qnote">只用於聚會後跟進你的討論事情，不作其他用途。</p>
-      <label for="question">你想討論的事情 *</label>
-      <textarea id="question" placeholder="例如：「在英國做爸爸，我如何跟孩子建立信任？」⋯⋯"></textarea>
-      <div class="ferr" id="formError"></div>
-      <button class="subbtn" id="submitBtn" onclick="doSubmit()">提交我的討論事情 →</button>
+  <div class="qaw">
+      <div id="ff">
+        <label for="em">你的電郵地址（選填）</label>
+        <input type="email" id="em" placeholder="yourname@example.com">
+        <p class="qnote">只用於聚會後跟進你的討論事情，不作其他用途。</p>
+        <label for="qq">你想討論的事情 *</label>
+        <textarea id="qq" placeholder="例如：「在英國做爸爸，我如何跟孩子建立信任？」⋯⋯"></textarea>
+        <p id="qerr" style="color:#c0392b;font-size:.85rem;display:none;margin-top:.5rem;"></p>
+        <button class="subbtn" id="qbtn" type="button" onclick="sendQ()">提交我的討論事情 →</button>
+      </div>
+      <div id="fok" style="display:none;background:#E8F5EE;border:1.5px solid #52B788;border-radius:12px;padding:1.4rem;text-align:center;line-height:1.8;color:#2e7d4f;font-size:.95rem;">
+        ✅ <strong>你的討論事情已收到！</strong><br>
+        Gavin 傳道會在聚會中回應。<br>
+        期待 6 月 18 日見到你！🙏
+      </div>
     </div>
-    <div class="fsuc" id="formSuccess">✅ 你的討論事情已送出！感謝你！<br>Gavin 傳道會在聚會中回應。<br>期待 6 月 18 日見到你！🙏</div>
-  </div>
-</section>
+  </section>
 
 <section class="sec sp">
   <div class="lbl lp">聚會地點</div>
@@ -256,38 +260,26 @@ function exportQuestions(){
   const a=document.createElement("a");a.href="data:text/csv;charset=utf-8,"+encodeURIComponent("\uFEFF"+csv);a.download="fathers_day_questions.csv";a.click();
 }
 
-function doSubmit(){
-  /* Grab values */
-  var email = (document.getElementById("email").value || "").trim();
-  var q     = (document.getElementById("question").value || "").trim();
-  var er    = document.getElementById("formError");
-  var btn   = document.getElementById("submitBtn");
 
-  /* Hide any previous error */
-  er.style.display = "none";
 
-  /* Validate */
+function sendQ(){
+  var email = document.getElementById("em").value.trim();
+  var q     = document.getElementById("qq").value.trim();
+  var err   = document.getElementById("qerr");
+  err.style.display = "none";
   if(!q){
-    er.textContent = "請輸入你想討論的事情，我們很想聽聽你的心聲。";
-    er.style.display = "block";
+    err.textContent = "請先輸入你想討論的事情 😊";
+    err.style.display = "block";
     return;
   }
-
-  /* Immediately update UI — no waiting */
-  btn.disabled = true;
-  btn.textContent = "已提交 ✓";
-  document.getElementById("formFields").style.display = "none";
-  document.getElementById("formSuccess").style.display = "block";
-
-  /* Send to Formspree silently in background */
-  fetch("https://formspree.io/f/xbdeqowe", {
-    method: "POST",
-    headers: {"Content-Type":"application/json","Accept":"application/json"},
-    body: JSON.stringify({
-      "_subject": "【SCCC父親節聚會】新討論事情",
-      "電郵": email || "（未填）",
-      "討論事情": q
-    })
+  /* INSTANT feedback — show success right now */
+  document.getElementById("ff").style.display  = "none";
+  document.getElementById("fok").style.display = "block";
+  /* Send to Formspree quietly in background */
+  fetch("https://formspree.io/f/xbdeqowe",{
+    method:"POST",
+    headers:{"Content-Type":"application/json","Accept":"application/json"},
+    body:JSON.stringify({"_subject":"【SCCC父親節聚會】討論事情","電郵":email||"未填","問題":q})
   }).catch(function(){});
 }
 </script>
