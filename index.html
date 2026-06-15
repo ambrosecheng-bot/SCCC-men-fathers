@@ -188,7 +188,7 @@ footer a{color:var(--yellow);}
       <label for="question">你想討論的事情 *</label>
       <textarea id="question" placeholder="例如：「在英國做爸爸，我如何跟孩子建立信任？」⋯⋯"></textarea>
       <div class="ferr" id="formError"></div>
-      <button class="subbtn" onclick="submitQuestion()">提交我的討論事情 →</button>
+      <button class="subbtn" id="submitBtn" onclick="doSubmit()">提交我的討論事情 →</button>
     </div>
     <div class="fsuc" id="formSuccess">✅ 你的討論事情已送出！感謝你！<br>Gavin 傳道會在聚會中回應。<br>期待 6 月 18 日見到你！🙏</div>
   </div>
@@ -244,56 +244,7 @@ function sc(){const e=document.getElementById("copyMsg");e.textContent="✅ 已�
 const DK="fDQ";
 function gDB(){try{return JSON.parse(localStorage.getItem(DK)||"[]");}catch(e){return[];}}
 function sDB(d){try{localStorage.setItem(DK,JSON.stringify(d));}catch(e){}}
-function submitQuestion(){
-  var email = document.getElementById("email").value.trim();
-  var q = document.getElementById("question").value.trim();
-  var er = document.getElementById("formError");
-  er.style.display = "none";
 
-  if(!q){
-    er.textContent = "請輸入你想討論的事情，我們很想聽聽你的心聲。";
-    er.style.display = "block";
-    return;
-  }
-  if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-    er.textContent = "電郵格式不正確，請重新輸入或留空。";
-    er.style.display = "block";
-    return;
-  }
-
-  var btn = document.querySelector(".subbtn");
-  btn.disabled = true;
-  btn.textContent = "提交中...";
-
-  /* Show success IMMEDIATELY — don't wait for network */
-  setTimeout(function(){
-    document.getElementById("formFields").style.display = "none";
-    document.getElementById("formSuccess").style.display = "block";
-  }, 400);
-
-  /* Send to Formspree in background */
-  fetch("https://formspree.io/f/xbdeqowe", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    },
-    body: JSON.stringify({
-      email: email || "（未填電郵）",
-      message: q,
-      "_subject": "【修咸頓華人基督教會父親節聚會】新討論事情提交"
-    })
-  }).catch(function(err){
-    console.log("Formspree error:", err);
-  });
-
-  /* Also save locally */
-  try {
-    var db = JSON.parse(localStorage.getItem("fDQ") || "[]");
-    db.push({id: Date.now(), email: email||null, question: q, timestamp: new Date().toISOString()});
-    localStorage.setItem("fDQ", JSON.stringify(db));
-  } catch(e){}
-}
   if(em&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){er.textContent="電郵格式不正確，請重新輸入或留空。";er.style.display="block";return;}
   const b=document.querySelector(".subbtn");b.disabled=true;b.textContent="提交中⋯⋯";
   const db=gDB();db.push({id:Date.now(),email:em||null,question:q,timestamp:new Date().toISOString()});sDB(db);
@@ -303,6 +254,41 @@ function exportQuestions(){
   const db=gDB();if(!db.length){alert("暫無討論事情記錄。");return;}
   const csv=["時間,電郵,討論事情"].concat(db.map(r=>[r.timestamp,r.email||"",'"'+(r.question||"").replace(/"/g,'""')+'"'].join(","))).join("\n");
   const a=document.createElement("a");a.href="data:text/csv;charset=utf-8,"+encodeURIComponent("\uFEFF"+csv);a.download="fathers_day_questions.csv";a.click();
+}
+
+function doSubmit(){
+  /* Grab values */
+  var email = (document.getElementById("email").value || "").trim();
+  var q     = (document.getElementById("question").value || "").trim();
+  var er    = document.getElementById("formError");
+  var btn   = document.getElementById("submitBtn");
+
+  /* Hide any previous error */
+  er.style.display = "none";
+
+  /* Validate */
+  if(!q){
+    er.textContent = "請輸入你想討論的事情，我們很想聽聽你的心聲。";
+    er.style.display = "block";
+    return;
+  }
+
+  /* Immediately update UI — no waiting */
+  btn.disabled = true;
+  btn.textContent = "已提交 ✓";
+  document.getElementById("formFields").style.display = "none";
+  document.getElementById("formSuccess").style.display = "block";
+
+  /* Send to Formspree silently in background */
+  fetch("https://formspree.io/f/xbdeqowe", {
+    method: "POST",
+    headers: {"Content-Type":"application/json","Accept":"application/json"},
+    body: JSON.stringify({
+      "_subject": "【SCCC父親節聚會】新討論事情",
+      "電郵": email || "（未填）",
+      "討論事情": q
+    })
+  }).catch(function(){});
 }
 </script>
 </body>
