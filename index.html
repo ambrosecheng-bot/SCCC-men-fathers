@@ -245,28 +245,54 @@ const DK="fDQ";
 function gDB(){try{return JSON.parse(localStorage.getItem(DK)||"[]");}catch(e){return[];}}
 function sDB(d){try{localStorage.setItem(DK,JSON.stringify(d));}catch(e){}}
 function submitQuestion(){
-  var email=document.getElementById("email").value.trim();
-  var q=document.getElementById("question").value.trim();
-  var er=document.getElementById("formError");er.style.display="none";
-  if(!q){er.textContent="請輸入你想討論的事情，我們很想聽聽你的心聲。";er.style.display="block";return;}
-  var emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if(email&&!emailOk.test(email)){er.textContent="電郵格式不正確，請重新輸入或留空。";er.style.display="block";return;}
-  var b=document.querySelector(".subbtn");b.disabled=true;b.textContent="提交中\u22ef\u22ef\u22ef";
-  var db=gDB();db.push({id:Date.now(),email:email||null,question:q,timestamp:new Date().toISOString()});sDB(db);
-  fetch("https://formspree.io/f/xbdeqowe",{
-    method:"POST",
-    headers:{"Content-Type":"application/json","Accept":"application/json"},
-    body:JSON.stringify({email:email||"（未填電郵）",message:q,"_subject":"【父親節聚會】新討論事情提交"})
-  })
-  .then(function(r){return r.json();})
-  .then(function(){
-    document.getElementById("formFields").style.display="none";
-    document.getElementById("formSuccess").style.display="block";
-  })
-  .catch(function(){
-    document.getElementById("formFields").style.display="none";
-    document.getElementById("formSuccess").style.display="block";
+  var email = document.getElementById("email").value.trim();
+  var q = document.getElementById("question").value.trim();
+  var er = document.getElementById("formError");
+  er.style.display = "none";
+
+  if(!q){
+    er.textContent = "請輸入你想討論的事情，我們很想聽聽你的心聲。";
+    er.style.display = "block";
+    return;
+  }
+  if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    er.textContent = "電郵格式不正確，請重新輸入或留空。";
+    er.style.display = "block";
+    return;
+  }
+
+  var btn = document.querySelector(".subbtn");
+  btn.disabled = true;
+  btn.textContent = "提交中...";
+
+  /* Show success IMMEDIATELY — don't wait for network */
+  setTimeout(function(){
+    document.getElementById("formFields").style.display = "none";
+    document.getElementById("formSuccess").style.display = "block";
+  }, 400);
+
+  /* Send to Formspree in background */
+  fetch("https://formspree.io/f/xbdeqowe", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify({
+      email: email || "（未填電郵）",
+      message: q,
+      "_subject": "【修咸頓華人基督教會父親節聚會】新討論事情提交"
+    })
+  }).catch(function(err){
+    console.log("Formspree error:", err);
   });
+
+  /* Also save locally */
+  try {
+    var db = JSON.parse(localStorage.getItem("fDQ") || "[]");
+    db.push({id: Date.now(), email: email||null, question: q, timestamp: new Date().toISOString()});
+    localStorage.setItem("fDQ", JSON.stringify(db));
+  } catch(e){}
 }
   if(em&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){er.textContent="電郵格式不正確，請重新輸入或留空。";er.style.display="block";return;}
   const b=document.querySelector(".subbtn");b.disabled=true;b.textContent="提交中⋯⋯";
